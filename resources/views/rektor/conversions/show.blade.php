@@ -117,11 +117,11 @@
                             <div class="grid grid-cols-1 md:grid-cols-2 gap-4 border-t border-slate-200 pt-4">
                                 <div>
                                     <label for="rector_name" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Nama Rektor</label>
-                                    <input type="text" name="rector_name" id="rector_name" value="Prof. Dr. Ing. Ir. H. Hairul Abral" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" :required="status === 'approved'">
+                                    <input type="text" name="rector_name" id="rector_name" value="" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" :required="status === 'approved'">
                                 </div>
                                 <div>
                                     <label for="rector_nidn" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">NIDN Rektor</label>
-                                    <input type="text" name="rector_nidn" id="rector_nidn" value="0017086612" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" :required="status === 'approved'">
+                                    <input type="text" name="rector_nidn" id="rector_nidn" value="" class="w-full px-4 py-3 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" :required="status === 'approved'">
                                 </div>
                             </div>
                         </div>

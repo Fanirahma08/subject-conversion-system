@@ -51,8 +51,8 @@ class RektorController extends Controller
             'status' => ['required', 'in:approved,rejected'],
             'notes' => ['nullable', 'string'],
             'decree_number' => ['required_if:status,approved', 'nullable', 'string', 'max:255'],
-            'rector_name' => ['required_if:status,approved', 'nullable', 'string', 'max:255'],
-            'rector_nidn' => ['required_if:status,approved', 'nullable', 'string', 'max:50'],
+            'rector_name' => ['required_if:status,approved', 'string', 'max:255'],
+            'rector_nidn' => ['required_if:status,approved', 'string', 'max:50'],
         ]);
 
         if ($validated['status'] === 'approved') {
@@ -63,7 +63,7 @@ class RektorController extends Controller
             $academicYear = $month >= 9 ? "$year/" . ($year + 1) : ($year - 1) . "/$year";
 
             // Count total internal SKS (target subjects)
-            $totalTargetSks = Subject::where('university_id', null)->sum('sks');
+            $totalTargetSks = 144;
 
             $conversion->update([
                 'status' => 'approved',
@@ -71,8 +71,8 @@ class RektorController extends Controller
                 'decree_number' => $validated['decree_number'],
                 'decree_date' => $now->toDateString(),
                 'academic_year' => $academicYear,
-                'rector_name' => $validated['rector_name'] ?? 'Prof. Dr. Ing. Ir. H. Hairul Abral',
-                'rector_nidn' => $validated['rector_nidn'] ?? '0017086612',
+                'rector_name' => $validated['rector_name'],
+                'rector_nidn' => $validated['rector_nidn'],
                 'graduation_total_sks' => $totalTargetSks,
             ]);
         } else {
