@@ -131,14 +131,14 @@ class PMBController extends Controller
         $student->load('conversion');
 
         if ($student->conversion && $student->conversion->status !== 'rejected') {
-            return redirect()->route('pmb.students.index')->with('error', 'Only rejected students can be deleted.');
+            return redirect()->route('pmb.students.index')->with('error', 'Hanya mahasiswa yang ditolak yang dapat dihapus.');
         }
 
         // Deleting the student will cascade if foreign keys are set up, but let's be safe or just delete the user.
         // Usually, conversions and results should have ON DELETE CASCADE.
         $student->delete();
 
-        return redirect()->route('pmb.students.index')->with('success', 'Student deleted successfully.');
+        return redirect()->route('pmb.students.index')->with('success', 'Berhasil menghapus mahasiswa.');
     }
 
     /**
@@ -233,6 +233,6 @@ class PMBController extends Controller
             'reviewed_by' => auth()->id(),
         ]);
 
-        return redirect()->route('pmb.conversions.index')->with('success', 'Conversion request updated.');
+        return redirect()->route('pmb.conversions.index')->with('success', 'Data tinjauan berhasil diperbarui dan disimpan.');
     }
 }
