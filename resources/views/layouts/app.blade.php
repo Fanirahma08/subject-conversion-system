@@ -89,7 +89,9 @@
                         $dashboardRoute = match(auth()->user()->role) {
                             \App\Enums\UserRole::PMB => route('pmb.dashboard'),
                             \App\Enums\UserRole::Kaprodi => route('kaprodi.dashboard'),
+                            \App\Enums\UserRole::BAAK => route('baak.dashboard'),
                             \App\Enums\UserRole::Dekan => route('dekan.dashboard'),
+                            \App\Enums\UserRole::WR1 => route('wr1.dashboard'),
                             \App\Enums\UserRole::Rektor => route('rektor.dashboard'),
                             \App\Enums\UserRole::Mahasiswa => route('mahasiswa.dashboard'),
                             default => '#',
@@ -174,6 +176,19 @@
                         </a>
                     @endif
 
+                    @if(auth()->user()->isBAAK())
+                        <div class="px-3 pt-4 mb-2">
+                             <span x-show="sidebarOpen" class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Pusat BAAK</span>
+                        </div>
+                        <a href="{{ route('baak.conversions.index') }}" 
+                           class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group transition-all duration-200 {{ request()->routeIs('baak.conversions.*') ? 'bg-indigo-50 text-indigo-600 shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <div class="shrink-0 w-6 h-6 flex items-center justify-center {{ request()->routeIs('baak.conversions.*') ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600' }}">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span x-show="sidebarOpen" class="ml-3 truncate">Persetujuan Konversi</span>
+                        </a>
+                    @endif
+
                     @if(auth()->user()->isDekan())
                         <div class="px-3 pt-4 mb-2">
                              <span x-show="sidebarOpen" class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Pusat Dekan</span>
@@ -181,6 +196,19 @@
                         <a href="{{ route('dekan.conversions.index') }}" 
                            class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group transition-all duration-200 {{ request()->routeIs('dekan.conversions.*') ? 'bg-indigo-50 text-indigo-600 shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
                             <div class="shrink-0 w-6 h-6 flex items-center justify-center {{ request()->routeIs('dekan.conversions.*') ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600' }}">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            </div>
+                            <span x-show="sidebarOpen" class="ml-3 truncate">Persetujuan Konversi</span>
+                        </a>
+                    @endif
+
+                    @if(auth()->user()->isWR1())
+                        <div class="px-3 pt-4 mb-2">
+                             <span x-show="sidebarOpen" class="text-[10px] uppercase font-bold text-slate-400 tracking-widest">Pusat WR1</span>
+                        </div>
+                        <a href="{{ route('wr1.conversions.index') }}" 
+                           class="flex items-center px-3 py-2 text-sm font-medium rounded-xl group transition-all duration-200 {{ request()->routeIs('wr1.conversions.*') ? 'bg-indigo-50 text-indigo-600 shadow-sm' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900' }}">
+                            <div class="shrink-0 w-6 h-6 flex items-center justify-center {{ request()->routeIs('wr1.conversions.*') ? 'text-indigo-600' : 'text-slate-400 group-hover:text-slate-600' }}">
                                 <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                             </div>
                             <span x-show="sidebarOpen" class="ml-3 truncate">Persetujuan Konversi</span>

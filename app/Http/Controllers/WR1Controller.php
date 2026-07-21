@@ -5,18 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\Conversion;
 use Illuminate\Http\Request;
 
-class DekanController extends Controller
+class WR1Controller extends Controller
 {
     /**
-     * Dekan Dashboard.
+     * WR1 Dashboard.
      */
     public function index()
     {
-        return view('dekan.dashboard');
+        return view('wr1.dashboard');
     }
 
     /**
-     * List conversion requests waiting for Dekan's approval.
+     * List conversion requests waiting for WR1's approval.
      */
     public function conversionsIndex()
     {
@@ -24,7 +24,7 @@ class DekanController extends Controller
             ->orderBy('updated_at', 'desc')
             ->get();
 
-        return view('dekan.conversions.index', compact('conversions'));
+        return view('wr1.conversions.index', compact('conversions'));
     }
 
     /**
@@ -34,20 +34,20 @@ class DekanController extends Controller
     {
         $conversion->load(['user.studentDetail.university', 'results.source_subject', 'results.target_subject']);
 
-        return view('dekan.conversions.show', compact('conversion'));
+        return view('wr1.conversions.show', compact('conversion'));
     }
 
     /**
-     * Update conversion status (Approve to waiting_wr1 or Reject).
+     * Update conversion status (Approve to waiting_rektor or Reject).
      */
     public function conversionsUpdate(Request $request, Conversion $conversion)
     {
-        if ($conversion->status !== 'waiting_dekan') {
-            return redirect()->route('dekan.conversions.index')->with('error', 'Tindakan tidak valid.');
+        if ($conversion->status !== 'waiting_wr1') {
+            return redirect()->route('wr1.conversions.index')->with('error', 'Tindakan tidak valid.');
         }
 
         $validated = $request->validate([
-            'status' => ['required', 'in:waiting_wr1,rejected'],
+            'status' => ['required', 'in:waiting_rektor,rejected'],
             'notes' => ['nullable', 'string'],
         ]);
 
@@ -55,13 +55,13 @@ class DekanController extends Controller
             'status' => $validated['status'],
             'notes' => $validated['notes'],
         ]);
+
         if ($validated['status'] === 'rejected') {
             return redirect()
-                ->route('dekan.conversions.index')
-                ->with('error', 'Permohonan konversi ditolak oleh Dekan.');
+                ->route('wr1.conversions.index')
+                ->with('error', 'Permohonan konversi ditolak oleh WR1.');
         }
 
-
-        return redirect()->route('dekan.conversions.index')->with('success', 'Status konversi berhasil diperbarui dan diteruskan ke WR1.');
+        return redirect()->route('wr1.conversions.index')->with('success', 'Status konversi berhasil diperbarui dan diteruskan ke Rektor.');
     }
 }

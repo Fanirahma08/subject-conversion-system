@@ -54,8 +54,12 @@
                         <td class="px-6 py-4 whitespace-nowrap">
                             @if($conv->status == 'waiting')
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-amber-100 text-amber-700 uppercase tracking-tight">Menunggu Kaprodi</span>
+                            @elseif($conv->status == 'waiting_baak')
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-purple-100 text-purple-700 uppercase tracking-tight">Menunggu BAAK</span>
                             @elseif($conv->status == 'waiting_dekan')
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-indigo-100 text-indigo-700 uppercase tracking-tight">Menunggu Dekan</span>
+                            @elseif($conv->status == 'waiting_wr1')
+                                <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-cyan-100 text-cyan-700 uppercase tracking-tight">Menunggu WR1</span>
                             @elseif($conv->status == 'waiting_rektor')
                                 <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-100 text-blue-700 uppercase tracking-tight">Menunggu Rektor</span>
                             @elseif($conv->status == 'approved')

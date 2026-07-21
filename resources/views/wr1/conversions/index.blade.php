@@ -1,12 +1,12 @@
 @extends('layouts.app')
 
-@section('title', 'Persetujuan Dekan')
+@section('title', 'Persetujuan WR1')
 
 @section('content')
 <div class="max-w-7xl mx-auto py-2 px-2">
     <div class="mb-8">
-        <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Persetujuan Konversi (Dekan)</h1>
-        <p class="mt-1 text-sm text-slate-500">Tinjau permintaan konversi yang telah disetujui Kaprodi.</p>
+        <h1 class="text-3xl font-bold text-slate-900 tracking-tight">Persetujuan Konversi (WR1)</h1>
+        <p class="mt-1 text-sm text-slate-500">Tinjau permintaan konversi yang telah disetujui Dekan.</p>
     </div>
 
     @if (session('success'))
@@ -111,13 +111,13 @@
                         @endif
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm">
-                        @if ($conv->status === 'waiting_dekan')
-                        <a href="{{ route('dekan.conversions.show', $conv) }}"
+                        @if ($conv->status === 'waiting_wr1')
+                        <a href="{{ route('wr1.conversions.show', $conv) }}"
                             class="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-blue-500/20 transition-all active:scale-95 leading-none">
                             Tinjau
                         </a>
                         @else
-                        <a href="{{ route('dekan.conversions.show', $conv) }}"
+                        <a href="{{ route('wr1.conversions.show', $conv) }}"
                             class="inline-flex items-center px-4 py-2 bg-slate-600 hover:bg-slate-700 text-white text-xs font-bold rounded-xl shadow-lg shadow-slate-500/20 transition-all active:scale-95 leading-none">
                             Lihat Detail
                         </a>

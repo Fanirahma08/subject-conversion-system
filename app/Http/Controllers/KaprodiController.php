@@ -518,14 +518,14 @@ class KaprodiController extends Controller
     public function conversionsUpdate(Request $request, Conversion $conversion)
     {
         $validated = $request->validate([
-            'status' => ['required', 'in:waiting_dekan,rejected,waiting'],
+            'status' => ['required', 'in:waiting_baak,rejected,waiting'],
             'notes' => ['nullable', 'string'],
         ]);
 
         $hasNoGrade = $conversion->results()->whereNull('origin_grade')->exists();
 
-        if ($validated['status'] == 'waiting_dekan' && $hasNoGrade) {
-            return back()->with('error', 'Tidak dapat meneruskan ke Dekan tanpa nilai asal.');
+        if ($validated['status'] == 'waiting_baak' && $hasNoGrade) {
+            return back()->with('error', 'Tidak dapat meneruskan ke BAAK tanpa nilai asal.');
         }
 
         $conversion->update([
@@ -610,7 +610,9 @@ class KaprodiController extends Controller
         $users = User::whereIn('role', [
             UserRole::PMB,
             UserRole::Kaprodi,
+            UserRole::BAAK,
             UserRole::Dekan,
+            UserRole::WR1,
             UserRole::Rektor,
         ])->get();
 
@@ -714,7 +716,9 @@ class KaprodiController extends Controller
         return [
             UserRole::PMB->value,
             UserRole::Kaprodi->value,
+            UserRole::BAAK->value,
             UserRole::Dekan->value,
+            UserRole::WR1->value,
             UserRole::Rektor->value,
         ];
     }

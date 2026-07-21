@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BAAKController;
 use App\Http\Controllers\DekanController;
 use App\Http\Controllers\KaprodiController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\PMBController;
 use App\Http\Controllers\RektorController;
+use App\Http\Controllers\WR1Controller;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -104,6 +106,14 @@ Route::middleware(['auth', 'kaprodi'])->prefix('kaprodi')->name('kaprodi.')->gro
     Route::delete('/users/{user}', [KaprodiController::class, 'usersDestroy'])->name('users.destroy');
 });
 
+// BAAK Hub
+Route::middleware(['auth', 'baak'])->prefix('baak')->name('baak.')->group(function () {
+    Route::get('/', [BAAKController::class, 'index'])->name('dashboard');
+    Route::get('/conversions', [BAAKController::class, 'conversionsIndex'])->name('conversions.index');
+    Route::get('/conversions/{conversion}', [BAAKController::class, 'conversionsShow'])->name('conversions.show');
+    Route::put('/conversions/{conversion}', [BAAKController::class, 'conversionsUpdate'])->name('conversions.update');
+});
+
 // Mahasiswa Hub
 Route::middleware(['auth', 'mahasiswa'])->prefix('mahasiswa')->name('mahasiswa.')->group(function () {
     Route::get('/', [MahasiswaController::class, 'index'])->name('dashboard');
@@ -119,6 +129,14 @@ Route::middleware(['auth', 'dekan'])->prefix('dekan')->name('dekan.')->group(fun
     Route::get('/conversions', [DekanController::class, 'conversionsIndex'])->name('conversions.index');
     Route::get('/conversions/{conversion}', [DekanController::class, 'conversionsShow'])->name('conversions.show');
     Route::put('/conversions/{conversion}', [DekanController::class, 'conversionsUpdate'])->name('conversions.update');
+});
+
+// WR1 Hub
+Route::middleware(['auth', 'wr1'])->prefix('wr1')->name('wr1.')->group(function () {
+    Route::get('/', [WR1Controller::class, 'index'])->name('dashboard');
+    Route::get('/conversions', [WR1Controller::class, 'conversionsIndex'])->name('conversions.index');
+    Route::get('/conversions/{conversion}', [WR1Controller::class, 'conversionsShow'])->name('conversions.show');
+    Route::put('/conversions/{conversion}', [WR1Controller::class, 'conversionsUpdate'])->name('conversions.update');
 });
 
 // Rektor Hub

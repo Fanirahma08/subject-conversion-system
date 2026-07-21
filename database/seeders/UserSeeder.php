@@ -33,11 +33,29 @@ class UserSeeder extends Seeder
         );
 
         User::updateOrCreate(
+            ['email' => 'baak@gmail.com'],
+            [
+                'name' => 'BAAK',
+                'password' => Hash::make('password'),
+                'role' => UserRole::BAAK,
+            ]
+        );
+
+        User::updateOrCreate(
             ['email' => 'dekan@gmail.com'],
             [
                 'name' => 'Dekan',
                 'password' => Hash::make('password'),
                 'role' => UserRole::Dekan,
+            ]
+        );
+
+        User::updateOrCreate(
+            ['email' => 'wr1@gmail.com'],
+            [
+                'name' => 'Wakil Rektor 1',
+                'password' => Hash::make('password'),
+                'role' => UserRole::WR1,
             ]
         );
 

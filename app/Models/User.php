@@ -48,9 +48,19 @@ class User extends Authenticatable
         return $this->role === UserRole::Kaprodi;
     }
 
+    public function isBAAK(): bool
+    {
+        return $this->role === UserRole::BAAK;
+    }
+
     public function isDekan(): bool
     {
         return $this->role === UserRole::Dekan;
+    }
+
+    public function isWR1(): bool
+    {
+        return $this->role === UserRole::WR1;
     }
 
     public function isRektor(): bool

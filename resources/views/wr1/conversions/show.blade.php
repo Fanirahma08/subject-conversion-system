@@ -1,15 +1,15 @@
 @extends('layouts.app')
 
-@section('title', 'Tinjauan Konversi (Dekan)')
+@section('title', 'Tinjauan Konversi (WR1)')
 
 @section('content')
 <div class="max-w-7xl mx-auto py-2 px-2">
     <!-- Breadcrumbs -->
     <nav class="flex mb-6" aria-label="Breadcrumb">
         <ol class="flex items-center space-x-2 text-sm text-slate-400 font-medium">
-            <li><a href="{{ route('dekan.conversions.index') }}" class="hover:text-blue-600 transition-colors">Tinjauan</a></li>
+            <li><a href="{{ route('wr1.conversions.index') }}" class="hover:text-blue-600 transition-colors">Tinjauan</a></li>
             <li><svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg></li>
-            <li class="text-slate-900 font-bold">Persetujuan Dekan</li>
+            <li class="text-slate-900 font-bold">Persetujuan WR1</li>
         </ol>
     </nav>
 
@@ -75,23 +75,23 @@
                 </div>
             </div>
 
-            @if ($conversion->status === 'waiting_dekan')
+            @if ($conversion->status === 'waiting_wr1')
             <div class="bg-white rounded-3xl shadow-xl ring-1 ring-slate-200 overflow-hidden">
                 <div class="px-6 py-6 border-b border-slate-100">
-                    <h3 class="text-sm font-bold text-slate-800 mb-4">Persetujuan Dekan</h3>
-                    <form action="{{ route('dekan.conversions.update', $conversion) }}" method="POST" class="space-y-6">
+                    <h3 class="text-sm font-bold text-slate-800 mb-4">Persetujuan Wakil Rektor 1</h3>
+                    <form action="{{ route('wr1.conversions.update', $conversion) }}" method="POST" class="space-y-6">
                         @csrf
                         @method('PUT')
 
                         <div>
                             <div class="flex flex-col sm:flex-row gap-4">
                                 <label class="grow flex items-center px-4 py-3 rounded-2xl border-2 border-slate-100 cursor-pointer hover:border-emerald-200 hover:bg-emerald-50 transition-all group has-checked:border-emerald-500 has-checked:bg-emerald-50">
-                                    <input type="radio" name="status" value="waiting_wr1" class="hidden peer" required>
+                                    <input type="radio" name="status" value="waiting_rektor" class="hidden peer" required>
                                     <div class="w-5 h-5 rounded-full border-2 border-slate-200 flex items-center justify-center mr-3 group-hover:border-emerald-300 peer-checked:border-emerald-500 peer-checked:bg-emerald-500">
                                         <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
                                     </div>
                                     <div class="flex flex-col text-left">
-                                        <span class="text-sm font-bold text-slate-700 uppercase tracking-tight">Teruskan ke WR1</span>
+                                        <span class="text-sm font-bold text-slate-700 uppercase tracking-tight">Teruskan ke Rektor</span>
                                     </div>
                                 </label>
                                 <label class="grow flex items-center px-4 py-3 rounded-2xl border-2 border-slate-100 cursor-pointer hover:border-red-200 hover:bg-red-50 transition-all group has-checked:border-red-500 has-checked:bg-red-50">
@@ -106,7 +106,7 @@
 
                         <div>
                             <label for="notes" class="block text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2">Catatan (Opsional)</label>
-                            <textarea name="notes" rows="4" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" placeholder="Catatan untuk Kaprodi atau Mahasiswa...">{{ $conversion->notes }}</textarea>
+                            <textarea name="notes" rows="4" class="w-full px-4 py-3 rounded-2xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 focus:border-blue-500 outline-none" placeholder="Catatan untuk Kaprodi, Dekan, Rektor, atau Mahasiswa...">{{ $conversion->notes }}</textarea>
                         </div>
 
                         <button type="submit" class="w-full bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-2xl text-sm font-bold shadow-xl shadow-blue-600/20 active:scale-[0.98] transition-all">

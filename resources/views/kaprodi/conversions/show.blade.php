@@ -175,7 +175,7 @@
                         <span class="px-2 py-0.5 rounded-lg bg-blue-100 text-[10px] font-bold text-blue-600 uppercase">{{ $conversion->user->prodi }}</span>
                     </div>
                 </div>
-                @if($conversion->status === 'waiting_dekan' || $conversion->status === 'waiting_rektor' || $conversion->status === 'approved')
+                @if(in_array($conversion->status, ['waiting_baak', 'waiting_dekan', 'waiting_wr1', 'waiting_rektor', 'approved']))
                 <div class="shrink-0 self-center">
                     <a href="{{ route('conversions.pdf', $conversion) }}" target="_blank" class="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-[10px] font-bold rounded-xl shadow-lg shadow-emerald-600/20 transition-all active:scale-95">
                         <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -494,14 +494,14 @@
                             <div>
                                 <div class="flex gap-4">
                                     <label class="grow flex items-center px-4 py-3 rounded-2xl border-2 border-slate-100 cursor-pointer hover:border-emerald-200 hover:bg-emerald-50 transition-all group has-checked:border-emerald-500 has-checked:bg-emerald-50" :class="pendingDrafts.length > 0 ? 'opacity-50 cursor-not-allowed pointer-events-none' : ''">
-                                        <input type="radio" name="status" value="waiting_dekan" class="hidden peer" required>
+                                        <input type="radio" name="status" value="waiting_baak" class="hidden peer" required>
                                         <div class="w-5 h-5 rounded-full border-2 border-slate-200 flex items-center justify-center mr-3 group-hover:border-emerald-300 peer-checked:border-emerald-500 peer-checked:bg-emerald-500">
                                             <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
                                                 <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path>
                                             </svg>
                                         </div>
                                         <div class="flex flex-col text-left">
-                                            <span class="text-sm font-bold text-slate-700 uppercase tracking-tight">Teruskan ke Dekan</span>
+                                            <span class="text-sm font-bold text-slate-700 uppercase tracking-tight">Teruskan ke BAAK</span>
                                             <template x-if="pendingDrafts.length > 0">
                                                 <span class="text-[9px] text-amber-600 font-bold uppercase mt-1">Ditemukan draf yang belum disimpan!</span>
                                             </template>

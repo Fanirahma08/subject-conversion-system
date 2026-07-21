@@ -39,10 +39,14 @@ class AuthController extends Controller
                 return redirect()->intended('/pmb');
             } elseif (Auth::user()->role === UserRole::Kaprodi) {
                 return redirect()->intended('/kaprodi');
+            } elseif (Auth::user()->role === UserRole::BAAK) {
+                return redirect()->intended('/baak');
             } elseif (Auth::user()->role === UserRole::Mahasiswa) {
                 return redirect()->intended('/mahasiswa');
             } elseif (Auth::user()->role === UserRole::Dekan) {
                 return redirect()->intended('/dekan');
+            } elseif (Auth::user()->role === UserRole::WR1) {
+                return redirect()->intended('/wr1');
             } elseif (Auth::user()->role === UserRole::Rektor) {
                 return redirect()->intended('/rektor');
             } else {

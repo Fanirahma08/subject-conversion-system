@@ -102,10 +102,20 @@
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 animate-pulse"></span>
                             Menunggu Tinjauan Kaprodi
                         </div>
+                        @elseif ($conv->status == 'waiting_baak')
+                        <div class="w-fit px-4 py-1.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider border border-amber-200/50 shadow-sm flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 animate-pulse"></span>
+                            Menunggu Tinjauan BAAK
+                        </div>
                         @elseif ($conv->status == 'waiting_dekan')
                         <div class="w-fit px-4 py-1.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider border border-amber-200/50 shadow-sm flex items-center">
                             <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 animate-pulse"></span>
                             Menunggu Tinjauan Dekan
+                        </div>
+                        @elseif ($conv->status == 'waiting_wr1')
+                        <div class="w-fit px-4 py-1.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider border border-amber-200/50 shadow-sm flex items-center">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-2 animate-pulse"></span>
+                            Menunggu Tinjauan WR1
                         </div>
                         @elseif ($conv->status == 'waiting_rektor')
                         <div class="w-fit px-4 py-1.5 rounded-full bg-amber-50 text-amber-600 text-[10px] font-bold uppercase tracking-wider border border-amber-200/50 shadow-sm flex items-center">

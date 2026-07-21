@@ -43,7 +43,9 @@
                     <select id="role" name="role" required class="block w-full px-3 py-3 border border-slate-300 rounded-lg shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm appearance-none bg-no-repeat bg-right" style="background-image: url('data:image/svg+xml;charset=utf-8,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 fill=%27none%27 viewBox=%270 0 20 20%27%3E%3Cpath stroke=%27%236b7280%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27 stroke-width=%271.5%27 d=%27m6 8 4 4 4-4%27/%3E%3C/svg%3E'); background-size: 1.5rem auto; background-position: right 0.5rem center;">
                         <option value="{{ \App\Enums\UserRole::PMB->value }}" {{ old('role', $user->role->value) == \App\Enums\UserRole::PMB->value ? 'selected' : '' }}>PMB</option>
                         <option value="{{ \App\Enums\UserRole::Kaprodi->value }}" {{ old('role', $user->role->value) == \App\Enums\UserRole::Kaprodi->value ? 'selected' : '' }}>Kaprodi</option>
+                        <option value="{{ \App\Enums\UserRole::BAAK->value }}" {{ old('role', $user->role->value) == \App\Enums\UserRole::BAAK->value ? 'selected' : '' }}>BAAK</option>
                         <option value="{{ \App\Enums\UserRole::Dekan->value }}" {{ old('role', $user->role->value) == \App\Enums\UserRole::Dekan->value ? 'selected' : '' }}>Dekan</option>
+                        <option value="{{ \App\Enums\UserRole::WR1->value }}" {{ old('role', $user->role->value) == \App\Enums\UserRole::WR1->value ? 'selected' : '' }}>Wakil Rektor 1 (WR1)</option>
                         <option value="{{ \App\Enums\UserRole::Rektor->value }}" {{ old('role', $user->role->value) == \App\Enums\UserRole::Rektor->value ? 'selected' : '' }}>Rektor</option>
                     </select>
                     @error('role')<p class="mt-1 text-sm text-red-600">{{ $message }}</p>@enderror
