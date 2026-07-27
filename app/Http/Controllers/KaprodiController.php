@@ -391,7 +391,7 @@ class KaprodiController extends Controller
             'target_subject_id' => $validated['target_subject_id'],
         ]);
 
-        return back()->with('success', 'Mapping added to conversion results and saved globally.');
+        return back()->with('success', 'Pemetaan berhasil ditambahkan ke hasil konversi dan disimpan secara global.');
     }
 
     /**
@@ -442,7 +442,7 @@ class KaprodiController extends Controller
     {
         $result->delete();
 
-        return back()->with('success', 'Mapping removed.');
+        return back()->with('success', 'Pemetaan berhasil dihapus.');
     }
 
     /**
@@ -544,7 +544,7 @@ class KaprodiController extends Controller
     {
         // Authorization: Admin/Kaprodi/PMB/Dekan/Rektor OR the student who owns it
         if (! auth()->user()->isKaprodi() && ! auth()->user()->isPMB() && ! auth()->user()->isDekan() && ! auth()->user()->isRektor() && $conversion->user_id !== auth()->id()) {
-            abort(403, 'Unauthorized access.');
+            abort(403, 'Akses tidak diizinkan.');
         }
 
         $pdf = Pdf::loadView('pdf.conversion', compact('conversion'));

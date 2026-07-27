@@ -19,6 +19,6 @@ class MahasiswaMiddleware
             return $next($request);
         }
 
-        abort(403, 'Unauthorized action.');
+        abort(403, 'Akses tidak diizinkan.');
     }
 }

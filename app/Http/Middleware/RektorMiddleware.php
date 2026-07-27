@@ -16,7 +16,7 @@ class RektorMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (! $request->user() || ! $request->user()->isRektor()) {
-            abort(403, 'Unauthorized access.');
+            abort(403, 'Akses tidak diizinkan.');
         }
 
         return $next($request);

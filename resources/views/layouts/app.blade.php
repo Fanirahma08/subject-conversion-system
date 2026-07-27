@@ -318,7 +318,7 @@
                 const ts = new TomSelect(el, {
                     create: false,
                     sortField: { field: "text", order: "asc" },
-                    placeholder: el.getAttribute('placeholder') || 'Search...',
+                    placeholder: el.getAttribute('placeholder') || 'Cari...',
                     onInitialize: function() {
                         this.wrapper.classList.add('searchable-select');
                     }
