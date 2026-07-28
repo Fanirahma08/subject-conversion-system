@@ -10,7 +10,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        DB::statement("ALTER TABLE conversions MODIFY status ENUM('waiting', 'waiting_dekan', 'waiting_rektor', 'approved', 'rejected') DEFAULT 'waiting'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE conversions MODIFY status ENUM('waiting', 'waiting_dekan', 'waiting_rektor', 'approved', 'rejected') DEFAULT 'waiting'");
+        }
     }
 
     /**
@@ -18,7 +20,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        // Careful with down, if there are existing records with waiting_dekan/rektor, this might fail or truncate.
-        DB::statement("ALTER TABLE conversions MODIFY status ENUM('waiting', 'approved', 'rejected') DEFAULT 'waiting'");
+        if (DB::getDriverName() !== 'sqlite') {
+            DB::statement("ALTER TABLE conversions MODIFY status ENUM('waiting', 'approved', 'rejected') DEFAULT 'waiting'");
+        }
     }
 };

@@ -47,19 +47,24 @@ class BAAKController extends Controller
         }
 
         $validated = $request->validate([
-            'status' => ['required', 'in:waiting_dekan,rejected'],
+            'status' => ['required', 'in:waiting_dekan,rejected,waiting'],
             'notes' => ['nullable', 'string'],
         ]);
 
+        $statusToSave = $validated['status'];
+        if (in_array($statusToSave, ['rejected', 'waiting'])) {
+            $statusToSave = 'waiting';
+        }
+
         $conversion->update([
-            'status' => $validated['status'],
+            'status' => $statusToSave,
             'notes' => $validated['notes'],
         ]);
 
-        if ($validated['status'] === 'rejected') {
+        if ($statusToSave === 'waiting') {
             return redirect()
                 ->route('baak.conversions.index')
-                ->with('error', 'Permohonan konversi ditolak oleh BAAK.');
+                ->with('error', 'Permohonan konversi ditolak dan dikembalikan ke Kaprodi.');
         }
 
         return redirect()->route('baak.conversions.index')->with('success', 'Status konversi berhasil diperbarui dan diteruskan ke Dekan.');

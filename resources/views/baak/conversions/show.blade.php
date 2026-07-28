@@ -99,7 +99,7 @@
                                     <div class="w-5 h-5 rounded-full border-2 border-slate-200 flex items-center justify-center mr-3 group-hover:border-red-300 peer-checked:border-red-500 peer-checked:bg-red-500">
                                         <svg class="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 011.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
                                     </div>
-                                    <span class="text-sm font-bold text-slate-700 uppercase tracking-tight">Tolak Permintaan</span>
+                                    <span class="text-sm font-bold text-slate-700 uppercase tracking-tight">Tolak / Kembalikan ke Kaprodi</span>
                                 </label>
                             </div>
                         </div>

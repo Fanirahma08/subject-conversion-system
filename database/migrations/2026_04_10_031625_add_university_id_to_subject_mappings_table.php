@@ -16,12 +16,18 @@ return new class extends Migration
             $table->foreignId('university_id')->nullable()->after('id')->constrained()->onDelete('cascade');
         });
 
-        // Data Migration: Populate university_id from source_subject
-        DB::statement("
-            UPDATE subject_mappings sm
-            JOIN subjects s ON sm.source_subject_id = s.id
-            SET sm.university_id = s.university_id
-        ");
+        if (DB::getDriverName() === 'sqlite') {
+            DB::statement("
+                UPDATE subject_mappings
+                SET university_id = (SELECT university_id FROM subjects WHERE subjects.id = subject_mappings.source_subject_id)
+            ");
+        } else {
+            DB::statement("
+                UPDATE subject_mappings sm
+                JOIN subjects s ON sm.source_subject_id = s.id
+                SET sm.university_id = s.university_id
+            ");
+        }
     }
 
     /**

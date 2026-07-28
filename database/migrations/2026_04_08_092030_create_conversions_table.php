@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->unique()->constrained()->cascadeOnDelete();
             $table->string('transcript_path');
-            $table->enum('status', ['waiting', 'approved', 'rejected'])->default('waiting');
+            $table->enum('status', ['waiting', 'waiting_baak', 'waiting_dekan', 'waiting_wr1', 'waiting_rektor', 'approved', 'rejected'])->default('waiting');
             $table->text('notes')->nullable();
             $table->foreignId('reviewed_by')->nullable()->constrained('users')->nullOnDelete();
             $table->timestamps();
