@@ -65,6 +65,7 @@
                         <label for="prodi" class="block text-sm font-medium text-slate-700 mb-1">Program Studi Tujuan</label>
                         <select id="prodi" name="prodi" class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-slate-300 text-slate-900 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm">
                             <option value="Sistem Informasi">Sistem Informasi</option>
+                            <option value="Teknik Komputer">Teknik Komputer</option>
                         </select>
                         @error('prodi') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
