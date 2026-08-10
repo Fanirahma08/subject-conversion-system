@@ -41,8 +41,12 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $student->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{{ $student->email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-xs font-medium text-slate-900">{{ $student->studentDetail?->university?->name ?? '-' }}</div>
-                            <div class="text-[10px] text-slate-500">{{ $student->studentDetail?->prodi_origin }}</div>
+                            @if($student->studentDetail?->university)
+                                <div class="text-xs font-medium text-slate-900">{{ $student->studentDetail->university->name }}</div>
+                            @else
+                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-700 border border-purple-200">Pindah Jurusan Internal</span>
+                            @endif
+                            <div class="text-[10px] text-slate-500 mt-0.5">Asal: {{ $student->studentDetail?->prodi_origin ?? '-' }}</div>
                             <div class="text-[10px] text-slate-400 italic">Lulus: {{ $student->studentDetail?->graduation_date?->format('M d, Y') ?? '-' }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{{ $student->prodi ?? 'Sistem Informasi' }}</td>

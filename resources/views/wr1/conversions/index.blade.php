@@ -51,7 +51,7 @@
                     </td>
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex flex-col">
-                            <span class="text-[10px] text-slate-900 font-bold">{{ $conv->user->studentDetail->university->name ?? 'N/A' }}</span>
+                            <span class="text-[10px] text-slate-900 font-bold">{{ $conv->user->studentDetail?->university?->name ?? 'Pindah Jurusan Internal' }}</span>
                             <span class="text-[10px] text-slate-500 italic">{{ $conv->user->studentDetail->prodi_origin }}</span>
                         </div>
                     </td>

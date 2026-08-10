@@ -534,7 +534,7 @@
                 <tr>
                     <td class="student-label">Asal Kampus</td>
                     <td class="student-colon">:</td>
-                    <td>{{ $conversion->user->studentDetail->university->name ?? '-' }}</td>
+                    <td>{{ $conversion->user->studentDetail?->university?->name ?? 'Internal Kampus (Pindah Jurusan)' }}</td>
                 </tr>
                 <tr>
                     <td class="student-label">Tanggal Kelulusan</td>

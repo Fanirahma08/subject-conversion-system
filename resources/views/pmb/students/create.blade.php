@@ -18,11 +18,31 @@
             <p class="mt-1 text-sm text-slate-500">Daftarkan mahasiswa baru untuk konversi mata kuliah dari universitas sebelumnya.</p>
         </div>
 
-        <div class="px-8 py-10">
+        <div class="px-8 py-10" x-data="{ registrationType: '{{ old('registration_type', 'external') }}' }">
             <form method="POST" action="{{ route('pmb.students.store') }}" class="space-y-6">
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="col-span-full">
+                        <label class="block text-sm font-medium text-slate-700 mb-2">Jenis Pendaftaran Mahasiswa</label>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                            <label class="flex items-center p-4 border rounded-xl cursor-pointer transition-all" :class="registrationType === 'external' ? 'border-blue-600 bg-blue-50/50 ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-slate-300'">
+                                <input type="radio" name="registration_type" value="external" x-model="registrationType" class="h-4 w-4 text-blue-600 focus:ring-blue-500">
+                                <div class="ml-3">
+                                    <span class="block text-sm font-bold text-slate-900">Transfer Eksternal</span>
+                                    <span class="block text-xs text-slate-500">Mahasiswa pindahan dari universitas/perguruan tinggi luar</span>
+                                </div>
+                            </label>
+                            <label class="flex items-center p-4 border rounded-xl cursor-pointer transition-all" :class="registrationType === 'internal' ? 'border-blue-600 bg-blue-50/50 ring-2 ring-blue-500/20' : 'border-slate-200 bg-white hover:border-slate-300'">
+                                <input type="radio" name="registration_type" value="internal" x-model="registrationType" class="h-4 w-4 text-blue-600 focus:ring-blue-500">
+                                <div class="ml-3">
+                                    <span class="block text-sm font-bold text-slate-900">Pindah Jurusan Internal</span>
+                                    <span class="block text-xs text-slate-500">Mahasiswa internal kampus yang berpindah program studi</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+
                     <div class="col-span-full">
                         <label for="name" class="block text-sm font-medium text-slate-700 mb-1">Nama Lengkap</label>
                         <input id="name" name="name" type="text" required value="{{ old('name') }}" class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="mis. John Doe">
@@ -35,12 +55,12 @@
                         @error('email') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
-                    <div>
+                    <div x-show="registrationType === 'external'">
                         <div class="flex justify-between items-center mb-1">
                             <label for="university_id" class="block text-sm font-medium text-slate-700">Universitas Asal</label>
                             <a href="{{ route('pmb.universities.create') }}" class="text-[10px] font-bold text-blue-600 hover:text-blue-800 uppercase tracking-tighter decoration-slate-300 decoration-dotted underline-offset-2 hover:underline">Daftarkan Uni Baru</a>
                         </div>
-                        <select id="university_id" name="university_id" required class="searchable-select rounded-lg relative block w-full px-4 py-3 border border-slate-300 text-slate-900 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Pilih Universitas">
+                        <select id="university_id" name="university_id" :required="registrationType === 'external'" class="searchable-select rounded-lg relative block w-full px-4 py-3 border border-slate-300 text-slate-900 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="Pilih Universitas">
                             <option value="">Pilih Universitas</option>
                             @foreach($universities as $uni)
                                 <option value="{{ $uni->id }}" {{ old('university_id') == $uni->id ? 'selected' : '' }}>{{ $uni->name }}</option>
@@ -49,9 +69,14 @@
                         @error('university_id') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
+                    <div x-show="registrationType === 'internal'">
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Asal Kampus</label>
+                        <input type="text" readonly value="Internal Kampus" class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-slate-200 bg-slate-100 text-slate-500 shadow-sm sm:text-sm cursor-not-allowed">
+                    </div>
+
                     <div>
                         <label for="prodi_origin" class="block text-sm font-medium text-slate-700 mb-1">Program Studi Asal</label>
-                        <input id="prodi_origin" name="prodi_origin" type="text" required value="{{ old('prodi_origin') }}" class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="mis. Teknik Informatika">
+                        <input id="prodi_origin" name="prodi_origin" type="text" required value="{{ old('prodi_origin') }}" class="appearance-none rounded-lg relative block w-full px-4 py-3 border border-slate-300 placeholder-slate-400 text-slate-900 shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm" placeholder="mis. Teknik Komputer">
                         @error('prodi_origin') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 

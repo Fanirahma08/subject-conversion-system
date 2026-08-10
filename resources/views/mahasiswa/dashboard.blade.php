@@ -40,7 +40,7 @@
                     @endif
                     <div>
                         <span class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Universitas Asal</span>
-                        <span class="text-sm font-semibold text-slate-900">{{ $university->name ?? 'Belum Diatur' }}</span>
+                        <span class="text-sm font-semibold text-slate-900">{{ $university->name ?? 'Internal Kampus (Pindah Jurusan)' }}</span>
                     </div>
                     <div>
                         <span class="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">Prodi Asal</span>

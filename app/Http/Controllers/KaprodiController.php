@@ -229,8 +229,8 @@ class KaprodiController extends Controller
      */
     public function mappingsCreate()
     {
-        $sources = Subject::active()->whereNotNull('university_id')->with('university')->get();
-        $targets = Subject::active()->whereNull('university_id')->get();
+        $sources = Subject::active()->with('university')->orderBy('code')->get();
+        $targets = Subject::active()->whereNull('university_id')->orderBy('code')->get();
 
         return view('kaprodi.mappings.create', compact('sources', 'targets'));
     }
@@ -251,8 +251,10 @@ class KaprodiController extends Controller
         $source = Subject::findOrFail($sourceId);
 
         foreach ($targetIds as $targetId) {
+            $target = Subject::find($targetId);
             SubjectMapping::firstOrCreate([
                 'university_id' => $source->university_id,
+                'prodi' => $target?->prodi ?? auth()->user()->prodi,
                 'source_subject_id' => $sourceId,
                 'target_subject_id' => $targetId,
             ]);
@@ -302,26 +304,49 @@ class KaprodiController extends Controller
         $conversion->load(['user.studentDetail.university', 'results.source_subject', 'results.target_subject']);
 
         // --- SMART SYNC DETECTION ---
-        // Find existing global mappings explicitly for this student's university AND prodi
-        $studentUniId = $conversion->user->studentDetail->university_id;
-        $studentProdi = $conversion->user->studentDetail->prodi_origin;
+        $studentUniId = $conversion->user->studentDetail?->university_id;
+        $studentProdiOrigin = $conversion->user->studentDetail?->prodi_origin;
 
-        $eligibleMappingsCount = SubjectMapping::where('university_id', $studentUniId)
-            // ->where('prodi', $studentProdi)
-            ->whereNotIn('source_subject_id', $conversion->results->pluck('source_subject_id'))
-            ->count();
+        if ($studentUniId) {
+            $eligibleMappingsCount = SubjectMapping::where('university_id', $studentUniId)
+                ->whereNotIn('source_subject_id', $conversion->results->pluck('source_subject_id'))
+                ->count();
 
-        // Get subjects from the same university as the student
-        $sourceSubjects = Subject::where('university_id', $conversion->user->studentDetail->university_id)
-            ->active()
-            ->orderBy('code')
-            ->get();
+            $sourceSubjects = Subject::where('university_id', $studentUniId)
+                ->active()
+                ->orderBy('code')
+                ->get();
+        } else {
+            // Internal Student Transfer
+            $eligibleMappingsCount = SubjectMapping::whereNull('university_id')
+                ->where('prodi', $conversion->user->prodi)
+                ->whereNotIn('source_subject_id', $conversion->results->pluck('source_subject_id'))
+                ->count();
 
-        // Get internal subjects
+            $sourceSubjects = Subject::whereNull('university_id')
+                ->when($studentProdiOrigin, function ($q, $p) {
+                    return $q->where('prodi', $p);
+                })
+                ->active()
+                ->orderBy('code')
+                ->get();
+        }
+
+        // Get internal target subjects (prefer filtering by student's target prodi)
         $targetSubjects = Subject::whereNull('university_id')
+            ->when($conversion->user->prodi, function ($q, $p) {
+                return $q->where('prodi', $p);
+            })
             ->active()
             ->orderBy('code')
             ->get();
+
+        if ($targetSubjects->isEmpty()) {
+            $targetSubjects = Subject::whereNull('university_id')
+                ->active()
+                ->orderBy('code')
+                ->get();
+        }
 
         // Get all global grade conversions for JS auto-lookup
         $gradeConversions = GradeConversion::all();
@@ -334,12 +359,15 @@ class KaprodiController extends Controller
      */
     public function conversionsResultSync(Conversion $conversion)
     {
-        $studentUniId = $conversion->user->studentDetail->university_id;
-        $studentProdi = $conversion->user->studentDetail->prodi_origin;
+        $studentUniId = $conversion->user->studentDetail?->university_id;
 
-        $globalMappings = SubjectMapping::where('university_id', $studentUniId)
-            // ->where('prodi', $studentProdi)
-            ->get();
+        if ($studentUniId) {
+            $globalMappings = SubjectMapping::where('university_id', $studentUniId)->get();
+        } else {
+            $globalMappings = SubjectMapping::whereNull('university_id')
+                ->where('prodi', $conversion->user->prodi)
+                ->get();
+        }
 
         $count = 0;
         foreach ($globalMappings as $map) {
@@ -385,8 +413,9 @@ class KaprodiController extends Controller
         ]);
 
         // --- GLOBAL LEARNING LOGIC ---
-        // Save this mapping globally for the university
         SubjectMapping::firstOrCreate([
+            'university_id' => $conversion->user->studentDetail?->university_id,
+            'prodi' => $conversion->user->prodi,
             'source_subject_id' => $validated['source_subject_id'],
             'target_subject_id' => $validated['target_subject_id'],
         ]);
@@ -425,7 +454,7 @@ class KaprodiController extends Controller
 
             // Global Learning (Institutional Standard - Scoped by Uni & Prodi)
             SubjectMapping::firstOrCreate([
-                'university_id' => $conversion->user->studentDetail->university_id,
+                'university_id' => $conversion->user->studentDetail?->university_id,
                 'prodi' => $conversion->user->prodi,
                 'source_subject_id' => $result['source_subject_id'],
                 'target_subject_id' => $result['target_subject_id'],

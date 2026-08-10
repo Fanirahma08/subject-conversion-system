@@ -28,7 +28,7 @@
                         <select id="source_subject_id" name="source_subject_id" required class="searchable-select rounded-lg relative block w-full px-4 py-3 border border-amber-300 bg-amber-50/10 text-slate-900 shadow-sm focus:outline-none focus:ring-amber-500 focus:border-amber-500 sm:text-sm" placeholder="-- Pilih Mata Kuliah Asal --">
                             <option value="">-- Pilih Mata Kuliah Asal --</option>
                             @foreach($sources as $source)
-                                <option value="{{ $source->id }}">[{{ $source->code }}] {{ $source->name }} - {{ $source->sks }} Kredit ({{ $source->university->name }})</option>
+                                <option value="{{ $source->id }}">[{{ $source->code }}] {{ $source->name }} - {{ $source->sks }} Kredit ({{ $source->university ? $source->university->name : 'Internal: ' . ($source->prodi ?? 'Umum') }})</option>
                             @endforeach
                         </select>
                         @error('source_subject_id') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror

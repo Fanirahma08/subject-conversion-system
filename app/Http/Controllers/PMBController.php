@@ -41,11 +41,14 @@ class PMBController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'registration_type' => ['nullable', 'in:external,internal'],
             'prodi_origin' => ['required', 'string', 'max:255'],
-            'university_id' => ['required', 'exists:universities,id'],
+            'university_id' => ['nullable', 'required_if:registration_type,external', 'exists:universities,id'],
             'graduation_date' => ['nullable', 'date'],
             'prodi' => ['nullable', 'string', 'max:255'],
         ]);
+
+        $universityId = ($request->input('registration_type') === 'internal') ? null : $validated['university_id'];
 
         $user = User::create([
             'name' => $validated['name'],
@@ -57,8 +60,8 @@ class PMBController extends Controller
 
         $user->studentDetail()->create([
             'prodi_origin' => $validated['prodi_origin'],
-            'university_id' => $validated['university_id'],
-            'graduation_date' => $validated['graduation_date'],
+            'university_id' => $universityId,
+            'graduation_date' => $validated['graduation_date'] ?? null,
         ]);
 
         return redirect()->route('pmb.students.index')->with('success', 'Data siswa berhasil ditambahkan. Kata sandi default 123456.');
@@ -83,8 +86,9 @@ class PMBController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $student->id],
+            'registration_type' => ['nullable', 'in:external,internal'],
             'prodi_origin' => ['required', 'string', 'max:255'],
-            'university_id' => ['required', 'exists:universities,id'],
+            'university_id' => ['nullable', 'required_if:registration_type,external', 'exists:universities,id'],
             'graduation_date' => ['nullable', 'date'],
             'prodi' => ['nullable', 'string', 'max:255'],
             'nim' => ['nullable', 'string', 'max:50'],
@@ -97,6 +101,8 @@ class PMBController extends Controller
             'mother_name' => ['nullable', 'string', 'max:255'],
         ]);
 
+        $universityId = ($request->input('registration_type') === 'internal') ? null : $validated['university_id'];
+
         $student->update([
             'name' => $validated['name'],
             'email' => $validated['email'],
@@ -106,7 +112,7 @@ class PMBController extends Controller
         $student->studentDetail()->updateOrCreate(
             ['user_id' => $student->id],
             [
-                'university_id' => $validated['university_id'],
+                'university_id' => $universityId,
                 'prodi_origin' => $validated['prodi_origin'],
                 'graduation_date' => $validated['graduation_date'],
                 'nim' => $validated['nim'],
