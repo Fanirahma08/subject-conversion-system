@@ -53,7 +53,7 @@
         </div>
     @endif
 
-    @foreach($mappings->groupBy(fn($m) => $m->source_subject->university->name ?? ($m->university->name ?? 'Institusi Eksternal')) as $universityName => $universityMappings)
+    @foreach($mappings->groupBy(fn($m) => $m->source_subject?->university?->name ?? ($m->university?->name ?? ($m->source_subject?->prodi ? 'Internal - ' . $m->source_subject->prodi : 'Institusi Eksternal'))) as $universityName => $universityMappings)
         <div class="mb-12">
             <div class="flex items-center mb-4 px-2">
                 <div class="w-10 h-10 rounded-2xl bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 mr-4 shadow-sm">

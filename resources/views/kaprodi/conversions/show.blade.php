@@ -614,7 +614,10 @@
                 </div>
                 <form action="{{ route('kaprodi.subjects.store') }}" method="POST" class="p-8 space-y-4">
                     @csrf
-                    <input type="hidden" name="university_id" value="{{ $conversion->user->studentDetail->university_id }}">
+                    <input type="hidden" name="university_id" value="{{ $conversion->user->studentDetail?->university_id }}">
+                    @if(!$conversion->user->studentDetail?->university_id)
+                        <input type="hidden" name="prodi" value="{{ $conversion->user->studentDetail?->prodi_origin }}">
+                    @endif
                     <input type="hidden" name="is_active" value="1">
                     <input type="hidden" name="redirect_to" value="{{ url()->current() }}">
 
@@ -633,8 +636,8 @@
                         <input type="text" name="name" required class="w-full px-4 py-2.5 rounded-xl border border-slate-200 text-sm focus:ring-2 focus:ring-blue-500/20 outline-none">
                     </div>
                     <div>
-                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Universitas Asal</label>
-                        <input type="text" disabled value="{{ $conversion->user->studentDetail->university->name }}" class="w-full px-4 py-2.5 rounded-xl border border-slate-100 bg-slate-50 text-slate-400 text-xs italic font-medium">
+                        <label class="block text-[10px] font-bold text-slate-400 uppercase mb-1.5">Asal Kampus / Prodi</label>
+                        <input type="text" disabled value="{{ $conversion->user->studentDetail?->university?->name ?? ('Internal Kampus - ' . ($conversion->user->studentDetail?->prodi_origin ?? '')) }}" class="w-full px-4 py-2.5 rounded-xl border border-slate-100 bg-slate-50 text-slate-400 text-xs italic font-medium">
                     </div>
 
                     <div class="flex justify-end space-x-3 pt-4">

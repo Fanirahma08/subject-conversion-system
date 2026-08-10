@@ -72,7 +72,7 @@
                             <div class="text-[10px] text-slate-500">Semester {{ $subject->semester ?? '-' }}</div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-xs text-slate-600">
-                            {{ $subject->university?->name ?? 'Universitas Saat Ini' }}
+                            {{ $subject->university?->name ?? ('Internal - ' . ($subject->prodi ?? 'Umum')) }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[10px] font-bold {{ $subject->is_active ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-100 text-slate-500' }}">

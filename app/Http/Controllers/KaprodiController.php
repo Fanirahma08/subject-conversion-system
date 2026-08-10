@@ -96,6 +96,10 @@ class KaprodiController extends Controller
             'is_active' => ['boolean'],
         ]);
 
+        if (empty($validated['university_id']) && empty($validated['prodi'])) {
+            $validated['prodi'] = auth()->user()->prodi;
+        }
+
         Subject::create($validated);
 
         if ($request->has('redirect_to')) {
@@ -138,6 +142,10 @@ class KaprodiController extends Controller
             'prodi' => ['nullable', 'string', 'max:100'],
             'is_active' => ['boolean'],
         ]);
+
+        if (empty($validated['university_id']) && empty($validated['prodi'])) {
+            $validated['prodi'] = auth()->user()->prodi;
+        }
 
         $subject->update($validated);
 
