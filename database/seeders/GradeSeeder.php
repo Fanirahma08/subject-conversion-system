@@ -41,7 +41,7 @@ class GradeSeeder extends Seeder
 
         GradeConversion::updateOrCreate([
             'origin_grade' => 'C-',
-            'internal_grade' => 'CD',
+            'internal_grade' => 'C',
         ]);
 
         GradeConversion::updateOrCreate([

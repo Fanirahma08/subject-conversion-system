@@ -12,6 +12,8 @@ class Conversion extends Model
         'transcript_path',
         'registration_letter_path',
         'ktp_path',
+        'transfer_letter_path',
+        'accreditation_path',
         'status',
         'notes',
         'reviewed_by',

@@ -46,6 +46,52 @@
                         @error('transcript') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
+                    <!-- Surat Keterangan Pindah -->
+                    <div class="space-y-4" x-data="{ fileName: '{{ $conversion && $conversion->transfer_letter_path ? basename($conversion->transfer_letter_path) : '' }}' }">
+                        <label class="block text-sm font-bold text-slate-700">
+                            Surat Keterangan Pindah Kampus
+                            @if($conversion && $conversion->transfer_letter_path)
+                                <span class="ml-2 text-[10px] text-emerald-600 font-bold uppercase">(Sudah Diunggah)</span>
+                            @endif
+                        </label>
+                        <div class="relative">
+                            <input type="file" name="transfer_letter" id="transfer_letter" class="hidden" accept=".pdf,.jpg,.jpeg,.png" @change="fileName = $event.target.files[0].name">
+                            <label for="transfer_letter" class="flex flex-col items-center justify-center w-full min-h-40 px-6 py-8 border-2 border-dashed border-slate-300 rounded-3xl cursor-pointer bg-slate-50/50 hover:bg-violet-50/50 hover:border-violet-400 transition-all group">
+                                <div class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 text-violet-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path></svg>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block text-xs font-bold text-slate-900" x-text="fileName ? fileName : 'Upload Surat Ket. Pindah'"></span>
+                                    <span class="mt-1 block text-[10px] text-slate-400">PDF, JPG, PNG (Max. 5MB)</span>
+                                </div>
+                            </label>
+                        </div>
+                        @error('transfer_letter') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- Akreditasi Program Studi -->
+                    <div class="space-y-4" x-data="{ fileName: '{{ $conversion && $conversion->accreditation_path ? basename($conversion->accreditation_path) : '' }}' }">
+                        <label class="block text-sm font-bold text-slate-700">
+                            Akreditasi Program Studi (Asal)
+                            @if($conversion && $conversion->accreditation_path)
+                                <span class="ml-2 text-[10px] text-emerald-600 font-bold uppercase">(Sudah Diunggah)</span>
+                            @endif
+                        </label>
+                        <div class="relative">
+                            <input type="file" name="accreditation" id="accreditation" class="hidden" accept=".pdf,.jpg,.jpeg,.png" @change="fileName = $event.target.files[0].name">
+                            <label for="accreditation" class="flex flex-col items-center justify-center w-full min-h-40 px-6 py-8 border-2 border-dashed border-slate-300 rounded-3xl cursor-pointer bg-slate-50/50 hover:bg-teal-50/50 hover:border-teal-400 transition-all group">
+                                <div class="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
+                                    <svg class="w-6 h-6 text-teal-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path></svg>
+                                </div>
+                                <div class="text-center">
+                                    <span class="block text-xs font-bold text-slate-900" x-text="fileName ? fileName : 'Upload Akreditasi Prodi'"></span>
+                                    <span class="mt-1 block text-[10px] text-slate-400">PDF, JPG, PNG (Max. 5MB)</span>
+                                </div>
+                            </label>
+                        </div>
+                        @error('accreditation') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
+                    </div>
+
                     <!-- Surat Pendaftaran -->
                     <div class="space-y-4" x-data="{ fileName: '{{ $conversion && $conversion->registration_letter_path ? basename($conversion->registration_letter_path) : '' }}' }">
                         <label class="block text-sm font-bold text-slate-700">
@@ -105,6 +151,7 @@
                             <div class="mt-1 text-xs text-amber-700 space-y-1">
                                 <p>• Pastikan semua dokumen dalam format PDF atau Gambar (JPG/PNG) yang terbaca jelas.</p>
                                 <p>• Transkrip Nilai adalah dokumen wajib untuk proses konversi mata kuliah.</p>
+                                <p>• Surat Keterangan Pindah dan Akreditasi Program Studi diperlukan untuk verifikasi transfer kredit.</p>
                                 <p>• Surat Pendaftaran dan KTP diperlukan untuk validasi data administratif.</p>
                             </div>
                         </div>

@@ -118,7 +118,25 @@
                         Transkrip Mahasiswa: {{ $conversion->user->name }}
                     </h3>
 
-                    <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2 flex-wrap gap-y-2">
+                        @if($conversion->transfer_letter_path)
+                        <a href="{{ asset('storage/' . $conversion->transfer_letter_path) }}" target="_blank" class="text-[10px] font-bold text-violet-600 hover:text-violet-800 flex items-center bg-violet-50 px-3 py-1.5 rounded-lg border border-violet-100 transition-all">
+                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                            </svg>
+                            SURAT PINDAH
+                        </a>
+                        @endif
+
+                        @if($conversion->accreditation_path)
+                        <a href="{{ asset('storage/' . $conversion->accreditation_path) }}" target="_blank" class="text-[10px] font-bold text-teal-600 hover:text-teal-800 flex items-center bg-teal-50 px-3 py-1.5 rounded-lg border border-teal-100 transition-all">
+                            <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                            </svg>
+                            AKREDITASI PRODI
+                        </a>
+                        @endif
+
                         @if($conversion->registration_letter_path)
                         <a href="{{ asset('storage/' . $conversion->registration_letter_path) }}" target="_blank" class="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 flex items-center bg-indigo-50 px-3 py-1.5 rounded-lg border border-indigo-100 transition-all">
                             <svg class="w-3.5 h-3.5 mr-1.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">

@@ -43,14 +43,16 @@ class MahasiswaController extends Controller
      */
     public function conversionsStore(Request $request)
     {
+        $user = Auth::user();
+        $conversion = Conversion::where('user_id', $user->id)->first();
+
         $request->validate([
-            'transcript' => ['required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'transcript' => [($conversion && $conversion->transcript_path) ? 'nullable' : 'required', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'transfer_letter' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
+            'accreditation' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'registration_letter' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
             'ktp' => ['nullable', 'file', 'mimes:pdf,jpg,jpeg,png', 'max:5120'],
         ]);
-
-        $user = Auth::user();
-        $conversion = Conversion::where('user_id', $user->id)->first();
 
         // Prepare update data
         $data = [
@@ -67,6 +69,30 @@ class MahasiswaController extends Controller
             $data['transcript_path'] = $this->storeFileUsingOriginalName(
                 $request->file('transcript'),
                 'transcripts',
+                (string) $user->getKey()
+            );
+        }
+
+        // Handle Transfer Letter (Surat Keterangan Pindah)
+        if ($request->hasFile('transfer_letter')) {
+            if ($conversion && $conversion->transfer_letter_path) {
+                Storage::disk('public')->delete($conversion->transfer_letter_path);
+            }
+            $data['transfer_letter_path'] = $this->storeFileUsingOriginalName(
+                $request->file('transfer_letter'),
+                'transfer_letters',
+                (string) $user->getKey()
+            );
+        }
+
+        // Handle Study Program Accreditation (Akreditasi Prodi)
+        if ($request->hasFile('accreditation')) {
+            if ($conversion && $conversion->accreditation_path) {
+                Storage::disk('public')->delete($conversion->accreditation_path);
+            }
+            $data['accreditation_path'] = $this->storeFileUsingOriginalName(
+                $request->file('accreditation'),
+                'accreditations',
                 (string) $user->getKey()
             );
         }

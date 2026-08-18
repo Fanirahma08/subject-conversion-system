@@ -139,7 +139,7 @@
                 <!-- Card Body -->
                 <div class="p-8 space-y-8">
                     <!-- Documents Grid -->
-                    <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <!-- Transcript -->
                         <a href="{{ Storage::url($conv->transcript_path) }}" target="_blank" class="flex items-center p-4 bg-blue-50/50 rounded-2xl border border-blue-100 hover:bg-blue-100/50 transition-all group">
                             <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-blue-600 shadow-sm mr-3 group-hover:scale-110 transition-transform">
@@ -152,6 +152,60 @@
                                 <p class="text-[10px] text-slate-500 truncate">{{ basename($conv->transcript_path) }}</p>
                             </div>
                         </a>
+
+                        <!-- Transfer Letter (Surat Pindah) -->
+                        @if($conv->transfer_letter_path)
+                        <a href="{{ Storage::url($conv->transfer_letter_path) }}" target="_blank" class="flex items-center p-4 bg-violet-50/50 rounded-2xl border border-violet-100 hover:bg-violet-100/50 transition-all group">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-violet-600 shadow-sm mr-3 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-violet-600 uppercase tracking-wider">Surat Ket. Pindah</p>
+                                <p class="text-[10px] text-slate-500 truncate">{{ basename($conv->transfer_letter_path) }}</p>
+                            </div>
+                        </a>
+                        @else
+                        <div class="flex items-center p-4 bg-slate-50 rounded-2xl border border-slate-100 opacity-60">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-400 mr-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7v8a2 2 0 002 2h6M8 7V5a2 2 0 012-2h4.586a1 1 0 01.707.293l4.414 4.414a1 1 0 01.293.707V15a2 2 0 01-2 2h-2M8 7H6a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2v-2"></path>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Surat Ket. Pindah</p>
+                                <p class="text-[10px] text-slate-400 italic">Belum Ada</p>
+                            </div>
+                        </div>
+                        @endif
+
+                        <!-- Study Program Accreditation -->
+                        @if($conv->accreditation_path)
+                        <a href="{{ Storage::url($conv->accreditation_path) }}" target="_blank" class="flex items-center p-4 bg-teal-50/50 rounded-2xl border border-teal-100 hover:bg-teal-100/50 transition-all group">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-teal-600 shadow-sm mr-3 group-hover:scale-110 transition-transform">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-teal-600 uppercase tracking-wider">Akreditasi Prodi</p>
+                                <p class="text-[10px] text-slate-500 truncate">{{ basename($conv->accreditation_path) }}</p>
+                            </div>
+                        </a>
+                        @else
+                        <div class="flex items-center p-4 bg-slate-50 rounded-2xl border border-slate-100 opacity-60">
+                            <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-slate-400 mr-3">
+                                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"></path>
+                                </svg>
+                            </div>
+                            <div class="min-w-0">
+                                <p class="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Akreditasi Prodi</p>
+                                <p class="text-[10px] text-slate-400 italic">Belum Ada</p>
+                            </div>
+                        </div>
+                        @endif
 
                         <!-- Registration Letter -->
                         @if($conv->registration_letter_path)

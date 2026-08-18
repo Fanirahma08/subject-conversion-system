@@ -135,6 +135,8 @@ return [
         'current_password' => 'kata sandi saat ini',
         'name' => 'nama',
         'transcript' => 'transkrip nilai',
+        'transfer_letter' => 'surat keterangan pindah',
+        'accreditation' => 'akreditasi program studi',
         'registration_letter' => 'surat pendaftaran',
         'ktp' => 'KTP',
         'prodi_origin' => 'program studi asal',

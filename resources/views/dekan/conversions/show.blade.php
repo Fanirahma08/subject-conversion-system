@@ -18,11 +18,33 @@
         <!-- Left Column: Transcript Viewer -->
         <div class="xl:col-span-12 2xl:col-span-4 space-y-6">
             <div class="bg-white rounded-3xl shadow-xl ring-1 ring-slate-200 overflow-hidden sticky top-24">
-                <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center">
-                    <h3 class="text-sm font-bold text-slate-800">Transkrip</h3>
-                    <a href="{{ asset('storage/' . $conversion->transcript_path) }}" target="_blank" class="text-[10px] font-bold text-blue-600 hover:text-blue-800">
-                        BUKA
-                    </a>
+                <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center flex-wrap gap-2">
+                    <h3 class="text-sm font-bold text-slate-800">Transkrip & Berkas</h3>
+                    <div class="flex items-center space-x-2 flex-wrap gap-1">
+                        @if($conversion->transfer_letter_path)
+                        <a href="{{ asset('storage/' . $conversion->transfer_letter_path) }}" target="_blank" class="text-[10px] font-bold text-violet-600 hover:text-violet-800 bg-violet-50 px-2.5 py-1 rounded-lg border border-violet-100">
+                            SURAT PINDAH
+                        </a>
+                        @endif
+                        @if($conversion->accreditation_path)
+                        <a href="{{ asset('storage/' . $conversion->accreditation_path) }}" target="_blank" class="text-[10px] font-bold text-teal-600 hover:text-teal-800 bg-teal-50 px-2.5 py-1 rounded-lg border border-teal-100">
+                            AKREDITASI
+                        </a>
+                        @endif
+                        @if($conversion->registration_letter_path)
+                        <a href="{{ asset('storage/' . $conversion->registration_letter_path) }}" target="_blank" class="text-[10px] font-bold text-indigo-600 hover:text-indigo-800 bg-indigo-50 px-2.5 py-1 rounded-lg border border-indigo-100">
+                            PENDAFTARAN
+                        </a>
+                        @endif
+                        @if($conversion->ktp_path)
+                        <a href="{{ asset('storage/' . $conversion->ktp_path) }}" target="_blank" class="text-[10px] font-bold text-emerald-600 hover:text-emerald-800 bg-emerald-50 px-2.5 py-1 rounded-lg border border-emerald-100">
+                            KTP
+                        </a>
+                        @endif
+                        <a href="{{ asset('storage/' . $conversion->transcript_path) }}" target="_blank" class="text-[10px] font-bold text-blue-600 hover:text-blue-800 bg-blue-50 px-2.5 py-1 rounded-lg border border-blue-100">
+                            TRANSKRIP
+                        </a>
+                    </div>
                 </div>
                 <div class="h-150 overflow-y-auto bg-slate-900 flex items-center justify-center p-4">
                     @php $ext = pathinfo($conversion->transcript_path, PATHINFO_EXTENSION); @endphp
