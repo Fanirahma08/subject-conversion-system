@@ -39,7 +39,7 @@
                             </div>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="text-xs font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-lg">{{ $conv->user->studentDetail->prodi_origin }}</span>
+                            <span class="text-xs font-semibold text-slate-700 bg-slate-100 px-2 py-0.5 rounded-lg">{{ $conv->user->studentDetail?->prodi_origin ?? '-' }}</span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap">
                             <a href="{{ asset('storage/' . $conv->transcript_path) }}" target="_blank" class="inline-flex items-center text-xs font-bold text-blue-600 hover:underline">

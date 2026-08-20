@@ -17,6 +17,7 @@
         
         <!-- Left Column: Transcript Viewer -->
         <div class="xl:col-span-12 2xl:col-span-4 space-y-6">
+            <div class="bg-white rounded-3xl shadow-xl ring-1 ring-slate-200 overflow-hidden sticky top-24">
                 <div class="px-6 py-4 bg-slate-50 border-b border-slate-100 flex justify-between items-center flex-wrap gap-2">
                     <h3 class="text-sm font-bold text-slate-800">Transkrip & Berkas</h3>
                     <div class="flex items-center space-x-2 flex-wrap gap-1">
