@@ -11,6 +11,7 @@ class StudentDetail extends Model
         'user_id',
         'university_id',
         'prodi_origin',
+        'registration_type',
         'graduation_date',
         'nim',
         'place_of_birth',

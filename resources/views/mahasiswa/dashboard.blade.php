@@ -138,6 +138,10 @@
 
                 <!-- Card Body -->
                 <div class="p-8 space-y-8">
+                    @php
+                        $studentRegType = $conv->user->studentDetail?->registration_type ?? 'pindahan';
+                    @endphp
+
                     <!-- Documents Grid -->
                     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                         <!-- Transcript -->
@@ -153,7 +157,8 @@
                             </div>
                         </a>
 
-                        <!-- Transfer Letter (Surat Pindah) -->
+                        @if($studentRegType === 'pindahan')
+                        <!-- Transfer Letter (Surat Pindah - Khusus Mahasiswa Pindahan S1) -->
                         @if($conv->transfer_letter_path)
                         <a href="{{ Storage::url($conv->transfer_letter_path) }}" target="_blank" class="flex items-center p-4 bg-violet-50/50 rounded-2xl border border-violet-100 hover:bg-violet-100/50 transition-all group">
                             <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-violet-600 shadow-sm mr-3 group-hover:scale-110 transition-transform">
@@ -178,6 +183,7 @@
                                 <p class="text-[10px] text-slate-400 italic">Belum Ada</p>
                             </div>
                         </div>
+                        @endif
                         @endif
 
                         <!-- Study Program Accreditation -->

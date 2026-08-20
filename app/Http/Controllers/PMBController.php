@@ -41,14 +41,15 @@ class PMBController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'registration_type' => ['nullable', 'in:external,internal'],
+            'registration_type' => ['required', 'string', 'in:pindahan,alih_jenjang,internal,external'],
             'prodi_origin' => ['required', 'string', 'max:255'],
-            'university_id' => ['nullable', 'required_if:registration_type,external', 'exists:universities,id'],
+            'university_id' => ['nullable', 'required_if:registration_type,pindahan,alih_jenjang,external', 'exists:universities,id'],
             'graduation_date' => ['nullable', 'date'],
             'prodi' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $universityId = ($request->input('registration_type') === 'internal') ? null : $validated['university_id'];
+        $regType = ($validated['registration_type'] === 'external') ? 'pindahan' : $validated['registration_type'];
+        $universityId = ($regType === 'internal') ? null : $validated['university_id'];
 
         $user = User::create([
             'name' => $validated['name'],
@@ -60,6 +61,7 @@ class PMBController extends Controller
 
         $user->studentDetail()->create([
             'prodi_origin' => $validated['prodi_origin'],
+            'registration_type' => $regType,
             'university_id' => $universityId,
             'graduation_date' => $validated['graduation_date'] ?? null,
         ]);
@@ -86,9 +88,9 @@ class PMBController extends Controller
         $validated = $request->validate([
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users,email,' . $student->id],
-            'registration_type' => ['nullable', 'in:external,internal'],
+            'registration_type' => ['required', 'string', 'in:pindahan,alih_jenjang,internal,external'],
             'prodi_origin' => ['required', 'string', 'max:255'],
-            'university_id' => ['nullable', 'required_if:registration_type,external', 'exists:universities,id'],
+            'university_id' => ['nullable', 'required_if:registration_type,pindahan,alih_jenjang,external', 'exists:universities,id'],
             'graduation_date' => ['nullable', 'date'],
             'prodi' => ['nullable', 'string', 'max:255'],
             'nim' => ['nullable', 'string', 'max:50'],
@@ -101,7 +103,8 @@ class PMBController extends Controller
             'mother_name' => ['nullable', 'string', 'max:255'],
         ]);
 
-        $universityId = ($request->input('registration_type') === 'internal') ? null : $validated['university_id'];
+        $regType = ($validated['registration_type'] === 'external') ? 'pindahan' : $validated['registration_type'];
+        $universityId = ($regType === 'internal') ? null : $validated['university_id'];
 
         $student->update([
             'name' => $validated['name'],
@@ -114,6 +117,7 @@ class PMBController extends Controller
             [
                 'university_id' => $universityId,
                 'prodi_origin' => $validated['prodi_origin'],
+                'registration_type' => $regType,
                 'graduation_date' => $validated['graduation_date'],
                 'nim' => $validated['nim'],
                 'place_of_birth' => $validated['place_of_birth'],

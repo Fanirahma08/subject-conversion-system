@@ -22,6 +22,10 @@
             <form method="POST" action="{{ route('mahasiswa.conversions.store') }}" enctype="multipart/form-data" class="space-y-10">
                 @csrf
 
+                @php
+                    $studentRegType = auth()->user()->studentDetail?->registration_type ?? 'pindahan';
+                @endphp
+
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                     <!-- Transkrip Nilai -->
                     <div class="space-y-4" x-data="{ fileName: '{{ $conversion && $conversion->transcript_path ? basename($conversion->transcript_path) : '' }}' }">
@@ -46,7 +50,8 @@
                         @error('transcript') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
 
-                    <!-- Surat Keterangan Pindah -->
+                    @if($studentRegType === 'pindahan')
+                    <!-- Surat Keterangan Pindah (Hanya untuk Mahasiswa Pindahan S1 ke S1) -->
                     <div class="space-y-4" x-data="{ fileName: '{{ $conversion && $conversion->transfer_letter_path ? basename($conversion->transfer_letter_path) : '' }}' }">
                         <label class="block text-sm font-bold text-slate-700">
                             Surat Keterangan Pindah Kampus
@@ -68,8 +73,9 @@
                         </div>
                         @error('transfer_letter') <p class="mt-2 text-sm text-red-600">{{ $message }}</p> @enderror
                     </div>
+                    @endif
 
-                    <!-- Akreditasi Program Studi -->
+                    <!-- Akreditasi Program Studi (Muncul untuk Mahasiswa Pindahan dan Alih Jenjang) -->
                     <div class="space-y-4" x-data="{ fileName: '{{ $conversion && $conversion->accreditation_path ? basename($conversion->accreditation_path) : '' }}' }">
                         <label class="block text-sm font-bold text-slate-700">
                             Akreditasi Program Studi (Asal)
@@ -151,7 +157,11 @@
                             <div class="mt-1 text-xs text-amber-700 space-y-1">
                                 <p>• Pastikan semua dokumen dalam format PDF atau Gambar (JPG/PNG) yang terbaca jelas.</p>
                                 <p>• Transkrip Nilai adalah dokumen wajib untuk proses konversi mata kuliah.</p>
+                                @if($studentRegType === 'pindahan')
                                 <p>• Surat Keterangan Pindah dan Akreditasi Program Studi diperlukan untuk verifikasi transfer kredit.</p>
+                                @else
+                                <p>• Akreditasi Program Studi diperlukan untuk verifikasi kesetaraan kurikulum.</p>
+                                @endif
                                 <p>• Surat Pendaftaran dan KTP diperlukan untuk validasi data administratif.</p>
                             </div>
                         </div>

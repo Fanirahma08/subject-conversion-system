@@ -41,10 +41,19 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-slate-900">{{ $student->name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-500">{{ $student->email }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
+                            <div class="flex items-center space-x-2 mb-1">
+                                @if(($student->studentDetail?->registration_type ?? 'pindahan') === 'alih_jenjang')
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-teal-50 text-teal-700 border border-teal-200">Alih Jenjang (D3)</span>
+                                @elseif(($student->studentDetail?->registration_type ?? 'pindahan') === 'internal')
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200">Pindah Internal</span>
+                                @else
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-bold bg-blue-50 text-blue-700 border border-blue-200">Pindahan (S1)</span>
+                                @endif
+                            </div>
                             @if($student->studentDetail?->university)
                                 <div class="text-xs font-medium text-slate-900">{{ $student->studentDetail->university->name }}</div>
                             @else
-                                <span class="inline-flex items-center px-2 py-0.5 rounded text-[10px] font-semibold bg-purple-50 text-purple-700 border border-purple-200">Pindah Jurusan Internal</span>
+                                <div class="text-xs font-medium text-slate-700">Internal Kampus</div>
                             @endif
                             <div class="text-[10px] text-slate-500 mt-0.5">Asal: {{ $student->studentDetail?->prodi_origin ?? '-' }}</div>
                             <div class="text-[10px] text-slate-400 italic">Lulus: {{ $student->studentDetail?->graduation_date?->format('M d, Y') ?? '-' }}</div>
