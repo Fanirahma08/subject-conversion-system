@@ -42,4 +42,33 @@ class BAAKRejectionTest extends TestCase
             'notes' => 'Perlu revisi pada pemetaan matakuliah.',
         ]);
     }
+
+    public function test_baak_and_wr1_can_access_conversion_pdf(): void
+    {
+        $baakUser = User::factory()->create([
+            'role' => UserRole::BAAK,
+        ]);
+
+        $wr1User = User::factory()->create([
+            'role' => UserRole::WR1,
+        ]);
+
+        $student = User::factory()->create([
+            'role' => UserRole::Mahasiswa,
+        ]);
+
+        $conversion = Conversion::create([
+            'user_id' => $student->id,
+            'transcript_path' => 'transcripts/test.pdf',
+            'status' => 'waiting_baak',
+        ]);
+
+        // BAAK can access PDF
+        $responseBaak = $this->actingAs($baakUser)->get(route('conversions.pdf', $conversion));
+        $responseBaak->assertOk();
+
+        // WR1 can access PDF
+        $responseWr1 = $this->actingAs($wr1User)->get(route('conversions.pdf', $conversion));
+        $responseWr1->assertOk();
+    }
 }

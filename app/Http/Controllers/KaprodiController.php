@@ -579,8 +579,11 @@ class KaprodiController extends Controller
      */
     public function downloadPdf(Conversion $conversion)
     {
-        // Authorization: Admin/Kaprodi/PMB/Dekan/Rektor OR the student who owns it
-        if (! auth()->user()->isKaprodi() && ! auth()->user()->isPMB() && ! auth()->user()->isDekan() && ! auth()->user()->isRektor() && $conversion->user_id !== auth()->id()) {
+        // Authorization: Academic Staff (Kaprodi, PMB, BAAK, Dekan, WR1, Rektor) OR the student who owns it
+        $user = auth()->user();
+        $isStaff = $user->isKaprodi() || $user->isPMB() || $user->isBAAK() || $user->isDekan() || $user->isWR1() || $user->isRektor();
+
+        if (! $isStaff && $conversion->user_id !== $user->id) {
             abort(403, 'Akses tidak diizinkan.');
         }
 

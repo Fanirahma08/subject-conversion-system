@@ -539,7 +539,7 @@
                 <tr>
                     <td class="student-label">Tanggal Kelulusan</td>
                     <td class="student-colon">:</td>
-                    <td>{{ $conversion->user->studentDetail->graduation_date ? $conversion->user->studentDetail->graduation_date->locale('id')->translatedFormat('d F Y') : '-' }}</td>
+                    <td>{{ $conversion->user->studentDetail?->graduation_date ? $conversion->user->studentDetail->graduation_date->locale('id')->translatedFormat('d F Y') : '-' }}</td>
                 </tr>
             </table>
         </div>
